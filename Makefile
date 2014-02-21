@@ -1,8 +1,8 @@
 VERSION = 3
 PATCHLEVEL = 4
 SUBLEVEL = 0
-EXTRAVERSION =
-NAME = Saber-toothed Squirrel
+EXTRAVERSION = +p_4.4
+NAME = Lightning Zap
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
