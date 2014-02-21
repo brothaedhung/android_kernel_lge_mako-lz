@@ -107,6 +107,24 @@
 #if defined(CONFIG_BT) && defined(CONFIG_BT_HCIUART_ATH3K)
 #include <linux/wlan_plat.h>
 #include <linux/mutex.h>
+#include <linux/ion.h>
+#include <mach/ion.h>
+
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
+int set_two_phase_freq_badass(int cpufreq);
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+int set_three_phase_freq_badass(int cpufreq);
+#endif
+
+#ifdef CONFIG_CPU_FREQ_GOV_INTELLIDEMAND
+int id_set_two_phase_freq(int cpufreq);
+#endif
+
+#ifdef CONFIG_CPU_FREQ_GOV_HYPERvTNT_2_PHASE
+int set_two_phase_freq_hypervTNT(int cpufreq);
+#endif
+#ifdef CONFIG_CPU_FREQ_GOV_HYPERvTNT_3_PHASE
+int set_three_phase_freq_hypervTNT(int cpufreq);
 #endif
 
 static struct platform_device msm_fm_platform_init = {
@@ -3489,6 +3507,17 @@ static void __init msm8960_cdp_init(void)
 		msm_device_uart_dm9.dev.platform_data = &msm_uart_dm9_pdata;
 		platform_device_register(&msm_device_uart_dm9);
 	}
+
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
+  set_two_phase_freq_badass(CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE_FREQ);
+#endif
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+  set_three_phase_freq_badass(CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE_FREQ);
+#endif
+
+#ifdef CONFIG_CPU_FREQ_GOV_INTELLIDEMAND
+  id_set_two_phase_freq(1134000);
+#endif
 
 	/* For 8960 Standalone External Bluetooth Interface */
 	if (socinfo_get_platform_subtype() != PLATFORM_SUBTYPE_SGLTE) {
