@@ -1,7 +1,7 @@
 /* arch/arm/mach-msm/include/mach/memory.h
  *
  * Copyright (C) 2007 Google, Inc.
- * Copyright (c) 2009-2012, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2009-2013, The Linux Foundation. All rights reserved.
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -20,7 +20,19 @@
 /* physical offset of RAM */
 #define PLAT_PHYS_OFFSET UL(CONFIG_PHYS_OFFSET)
 
+#if defined(CONFIG_KEXEC_HARDBOOT)
+#if defined(CONFIG_MACH_APQ8064_FLO)
+#define KEXEC_HB_PAGE_ADDR		UL(0x88C00000)
+#elif defined(CONFIG_MACH_APQ8064_MAKO)
+#define KEXEC_HB_PAGE_ADDR		UL(0x88600000)
+#define KEXEC_HB_KERNEL_LOC		UL(0x3208000)
+#else
+#error "Adress for kexec hardboot page not defined"
+#endif
+#endif
+
 #define MAX_PHYSMEM_BITS 32
+
 #define SECTION_SIZE_BITS 28
 
 /* Maximum number of Memory Regions
